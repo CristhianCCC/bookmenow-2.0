@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  #eureka service ------------------------------------------------------------------------------------------------------
+  registry-discovery:
+    container_name: eureka
+    image: bookmenowbackend/parent/microservice-docker-eureka:0.0.1-SNAPSHOT
+    ports:
+      - "8761:8761"
+    environment:
+      - JAVA_OPTS=-Xms256M -Xmx256M
+    networks:
+      - bookmenow-network
+
+  #gateway service -----------------------------------------------------------------------------------------------------
+  gateway:
+    container_name: eureka
+    image: bookmenowbackend/parent/microservice-docker-gateway:0.0.1-SNAPSHOT
+    ports:
+      - "8090:8090"
+    environment:
+      - JAVA_OPTS=-Xms256M -Xmx256M -DEUREKA_SERVER=http://registry-discovery:8761/eureka/
+    depends_on:
+      - registry-discovery
+    networks:
+      - bookmenow-network
+
+  #user service --------------------------------------------------------------------------------------------------------
+  user:
+    container_name: eureka
+    image: bookmenowbackend/parent/microservice-docker-user:0.0.1-SNAPSHOT
+    environment:
+      - JAVA_OPTS=-Xms256M -Xmx256M -DEUREKA_SERVER=http://registry-discovery:8761/eureka/
+    depends_on:
+      - registry-discovery
+    networks:
+      - bookmenow-network
+
+#to run the compose docker compose -f "C:\Users\Janus\Desktop\BookMeNow\BookMeNowBackend\BookMeNowParent\Docker-compose.yml" up -d --force-recreate
+#before to do that, it must be compiled with these commands mvn clean package spring-boot:repackage and then mvn clean package dockerfile:build make a dir to target folder and copy the snapshot
