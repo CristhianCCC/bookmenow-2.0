@@ -12,16 +12,25 @@ public class GatewayRoutesConfig {
     @Bean
     public RouteLocator myRoutes(RouteLocatorBuilder builder){
         return builder.routes()
-        // auth route for login/signup ---------------------------------------------------------------------------------
+                // auth route for login/signup ---------------------------------------------------------------------------------
                 .route("auth-route", r -> r
                 .path("/auth/**")
                 .uri("lb://user") //name of the micro service
-        )
+                )
+
                 //authorization path for user (validation)--------------------------------------------------------------
                 .route(p -> p
                         .path("/users/**")
                         .filters(f -> f.addRequestHeader("user-service", "Request"))
                         .uri("lb://user")) //name of the micro service
+
+                //Catalog service --------------------------------------------------------------------------------------
+                .route("catalog", r -> r
+                        .path("/catalogs/**")
+                        .uri("lb://catalog")
+                )
+
+
                 .build();
     }
 }

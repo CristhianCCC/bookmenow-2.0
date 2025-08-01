@@ -1,10 +1,14 @@
-version: '3.9'
+version: '3.8'
 
 services:
-  #eureka service ------------------------------------------------------------------------------------------------------
-  registry-discovery:
+  # eureka service ------------------------------------------------------------------------------------------------------
+  eureka:
     container_name: eureka
-    image: bookmenowbackend/parent/microservice-docker-eureka:0.0.1-SNAPSHOT
+    build:
+      context: ./infraestructure/eureka
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: target/eureka-0.0.1-SNAPSHOT.jar
     ports:
       - "8761:8761"
     environment:
@@ -12,29 +16,63 @@ services:
     networks:
       - bookmenow-network
 
-  #gateway service -----------------------------------------------------------------------------------------------------
+  # gateway service -----------------------------------------------------------------------------------------------------
   gateway:
-    container_name: eureka
-    image: bookmenowbackend/parent/microservice-docker-gateway:0.0.1-SNAPSHOT
+    container_name: gateway
+    build:
+      context: ./infraestructure/gateway
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: target/gateway-0.0.1-SNAPSHOT.jar
     ports:
       - "8090:8090"
     environment:
-      - JAVA_OPTS=-Xms256M -Xmx256M -DEUREKA_SERVER=http://registry-discovery:8761/eureka/
+      - JAVA_OPTS=-Xms256M -Xmx256M
+      - SPRING_APPLICATION_JSON={"eureka":{"client":{"serviceUrl":{"defaultZone":"http://eureka:8761/eureka/"}}}}
     depends_on:
-      - registry-discovery
+      - eureka
     networks:
       - bookmenow-network
 
-  #user service --------------------------------------------------------------------------------------------------------
+  # user service --------------------------------------------------------------------------------------------------------
   user:
-    container_name: eureka
-    image: bookmenowbackend/parent/microservice-docker-user:0.0.1-SNAPSHOT
+    container_name: user
+    build:
+      context: ./services/user
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: target/user-0.0.1-SNAPSHOT.jar
     environment:
-      - JAVA_OPTS=-Xms256M -Xmx256M -DEUREKA_SERVER=http://registry-discovery:8761/eureka/
+      - JAVA_OPTS=-Xms256M -Xmx256M
+      - SPRING_APPLICATION_JSON={"eureka":{"client":{"serviceUrl":{"defaultZone":"http://eureka:8761/eureka/"}}}}
     depends_on:
-      - registry-discovery
+      - eureka
     networks:
       - bookmenow-network
 
-#to run the compose docker compose -f "C:\Users\Janus\Desktop\BookMeNow\BookMeNowBackend\BookMeNowParent\Docker-compose.yml" up -d --force-recreate
-#before to do that, it must be compiled with these commands mvn clean package spring-boot:repackage and then mvn clean package dockerfile:build make a dir to target folder and copy the snapshot
+  # catalog service -----------------------------------------------------------------------------------------------------
+  catalog:
+    container_name: catalog
+    build:
+      context: ./services/catalog
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: target/catalog-0.0.1-SNAPSHOT.jar
+    environment:
+      - JAVA_OPTS=-Xms256M -Xmx256M
+      - SPRING_APPLICATION_JSON={"eureka":{"client":{"serviceUrl":{"defaultZone":"http://eureka:8761/eureka/"}}}}
+    depends_on:
+      - eureka
+    networks:
+      - bookmenow-network
+
+# networks
+networks:
+  bookmenow-network:
+    driver: bridge
+
+# to run the compose:
+# docker compose -f "C:\Users\Janus\Desktop\bookmenow\bookmenowbackend\parent\Docker-compose.yml" up -d --build --force-recreate
+# before doing that:
+# 1. mvn clean package spring-boot:repackage
+# 2. asegúrate de que los JARs estén en las rutas target correctas de cada microservicio

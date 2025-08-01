@@ -1,30 +1,24 @@
 # Use official OpenJDK 17 image as the base image
 FROM eclipse-temurin:17-alpine
 
-# Create a new group with specific uid and non-root user called "admin"
-# Be sure that group id are not present on host. if already exist change by arbitrary other uid
+# Create a new group and user
 RUN addgroup -g 1028 devopsc \
     && adduser -D -G devopsc admin
 
-# Create a new mount point at /tmp on native host because a volume is more efficient and faster than filesystem
+# Mount point
 VOLUME /tmp
 
-# Copiamos el jar a la imagen
+# ARG para especificar el JAR desde la terminal
 ARG JAR_FILE
 
-
+# Copiamos el JAR construido (fat jar de Spring Boot)
 COPY ${JAR_FILE} app.jar
 
-
-# Change ownership of the /app directory to the "admin" user
+# Cambio de permisos
 RUN chown -R admin:devopsc /tmp
 
-# Switch to non-root "admin" user for added security
+# Cambiamos al usuario no root
 USER admin
 
-# Ejecutamos el jar al iniciar el contenedor
-#ENTRYPOINT ["java","-jar","/tmp/app.jar"]
+# Corrección: usar shell form para que JAVA_OPTS funcione
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
-
-#para crear la imagen desde la terminal de docker: docker build -t customer_image --no-cache --build-arg JAR_FILE=target/customer-0.0.1-SNAPSHOT.jar .
-#para correr el contenedor en base a la imagen previamente creada docker run -p 7080:8080 --name customer_container customer_image:latest -d

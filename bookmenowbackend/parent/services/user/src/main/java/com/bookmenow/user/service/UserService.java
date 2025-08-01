@@ -16,4 +16,6 @@ public interface UserService {
 
     public void deleteUser(Long id);
 
+    public UserDTO getUserByEmail(String email);
+
 }

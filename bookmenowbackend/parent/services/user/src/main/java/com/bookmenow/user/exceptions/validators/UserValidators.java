@@ -2,6 +2,7 @@ package com.bookmenow.user.exceptions.validators;
 import com.bookmenow.user.dto.UserDTO;
 import com.bookmenow.user.exceptions.exceptions.BusinessRuleException;
 import com.bookmenow.user.repository.UserRepository;
+import com.bookmenow.user.security.dto.AuthRequest;
 import org.springframework.http.HttpStatus;
 
 public class UserValidators {
@@ -48,11 +49,10 @@ public class UserValidators {
         }
         */
     }
-    /*
+
     public static void validateCredentials(AuthRequest dto) throws BusinessRuleException {
         if (dto == null) {
             throw new BusinessRuleException("2005", "Credentials cannot be empty", HttpStatus.BAD_REQUEST);
         }
     }
-    }*/
 }

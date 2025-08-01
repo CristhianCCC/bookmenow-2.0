@@ -50,6 +50,7 @@
 
     <modules>
         <module>user</module>
+        <module>catalog</module>
     </modules>
 
 </project>

@@ -7,6 +7,7 @@ import com.bookmenow.user.repository.UserRepository;
 import com.bookmenow.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,7 +19,10 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    public UserRepository userRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     /*Methods for DTO's ----------------------------------------------------------------------------------------------*/
@@ -29,8 +33,8 @@ public class UserServiceImpl implements UserService {
         user.setName(dto.getName());
         user.setLastName(dto.getLastName());
         user.setEmail(dto.getEmail());
-        //pending to validate password
-        user.setPassword(dto.getPassword());
+        //validating the password with passwordencoder previously implemented as a bean in securityconfig class
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setUserRoles(dto.getUserRoles());
         user.setPhone(dto.getPhone());
         user.setAddress(dto.getAddress());
@@ -91,7 +95,9 @@ public class UserServiceImpl implements UserService {
               userFound.setName(userDTO.getName());
               userFound.setLastName(userDTO.getLastName());
               userFound.setEmail(userDTO.getEmail());
-              userFound.setPassword(userDTO.getPassword());
+              if (!passwordEncoder.matches(userDTO.getPassword(), userFound.getPassword())) {
+                  userFound.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+              }
               userFound.setUserRoles(userDTO.getUserRoles());
               userFound.setPhone(userDTO.getPhone());
               userFound.setAddress(userDTO.getAddress());
@@ -107,5 +113,10 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("User with ID " + id + " was not found");
         }
         userRepository.deleteById(id);
+    }
+    @Override
+    public UserDTO getUserByEmail (String email){
+        User userFound = userRepository.getUserByEmail(email);
+        return toDTO(userFound);
     }
 }
