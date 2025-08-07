@@ -11,12 +11,10 @@ import com.bookmenow.user.model.enums.UserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -78,7 +76,7 @@ public class CatalogServiceImpl implements CatalogService {
                     dto.setProviderName(userDTO.getName());
                     dto.setProviderEmail(userDTO.getEmail());
                     dto.setProviderAdress(userDTO.getAddress());
-                    dto.setRole(userDTO.getUserRoles());
+                    dto.setRole(com.bookmenow.catalog.dto.enums.UserRoles.valueOf(userDTO.getUserRoles().name()));
                 }
             } catch (Exception e) {
                 // Handle case where user does not exist or service is unavailable

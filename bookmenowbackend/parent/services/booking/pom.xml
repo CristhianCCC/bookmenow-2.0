@@ -16,20 +16,39 @@
 	<description>Demo project for Spring Boot</description>
 
 
+	<dependencies>
+		<!--feign which is going to allow the comunication with catalog and user -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+			<version>4.3.0</version>
+		</dependency>
+
+		<!--to comunicate with user-->
+		<dependency>
+			<groupId>com.bookmenow</groupId>
+			<artifactId>user</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<!--to comunicate with catalog -->
+		<dependency>
+			<groupId>com.bookmenow</groupId>
+			<artifactId>catalog</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<!--spring security-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<!--To repackage, is important to create images -->
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>9</source>
-					<target>9</target>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -44,6 +63,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>

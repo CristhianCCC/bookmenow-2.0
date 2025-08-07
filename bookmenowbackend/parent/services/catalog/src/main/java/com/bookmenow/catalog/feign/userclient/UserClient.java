@@ -1,5 +1,4 @@
 package com.bookmenow.catalog.feign.userclient;
-
 import com.bookmenow.user.dto.UserDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

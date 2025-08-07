@@ -66,6 +66,22 @@ services:
     networks:
       - bookmenow-network
 
+  # booking service -----------------------------------------------------------------------------------------------------
+  booking:
+    container_name: booking
+    build:
+      context: ./services/booking
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: target/booking-0.0.1-SNAPSHOT.jar
+    environment:
+      - JAVA_OPTS=-Xms256M -Xmx256M
+      - SPRING_APPLICATION_JSON={"eureka":{"client":{"serviceUrl":{"defaultZone":"http://eureka:8761/eureka/"}}}}
+    depends_on:
+      - eureka
+    networks:
+      - bookmenow-network
+
 # networks
 networks:
   bookmenow-network:
@@ -75,4 +91,3 @@ networks:
 # docker compose -f "C:\Users\Janus\Desktop\bookmenow\bookmenowbackend\parent\Docker-compose.yml" up -d --build --force-recreate
 # before doing that:
 # 1. mvn clean package spring-boot:repackage
-# 2. asegúrate de que los JARs estén en las rutas target correctas de cada microservicio

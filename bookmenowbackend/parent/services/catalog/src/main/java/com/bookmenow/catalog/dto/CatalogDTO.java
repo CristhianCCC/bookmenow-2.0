@@ -1,7 +1,7 @@
 package com.bookmenow.catalog.dto;
-import com.bookmenow.user.model.enums.UserRoles;
+import com.bookmenow.catalog.dto.enums.UserRoles;
+
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class CatalogDTO {
 

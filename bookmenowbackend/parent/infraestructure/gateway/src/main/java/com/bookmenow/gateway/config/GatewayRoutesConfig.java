@@ -30,6 +30,11 @@ public class GatewayRoutesConfig {
                         .uri("lb://catalog")
                 )
 
+                //Booking service --------------------------------------------------------------------------------------
+                .route("booking", r -> r
+                        .path("/bookings/**")
+                        .uri("lb://booking")
+                )
 
                 .build();
     }

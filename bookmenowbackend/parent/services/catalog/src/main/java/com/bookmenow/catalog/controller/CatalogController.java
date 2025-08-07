@@ -1,5 +1,4 @@
 package com.bookmenow.catalog.controller;
-
 import com.bookmenow.catalog.dto.CatalogDTO;
 import com.bookmenow.catalog.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
