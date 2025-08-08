@@ -1,4 +1,4 @@
-package com.bookmenow.user.model.enums;
+package com.bookmenow.enums;
 
 public enum UserRoles {
 

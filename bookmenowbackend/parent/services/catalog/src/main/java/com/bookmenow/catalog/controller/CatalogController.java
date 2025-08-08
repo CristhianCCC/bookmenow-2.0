@@ -1,6 +1,6 @@
 package com.bookmenow.catalog.controller;
-import com.bookmenow.catalog.dto.CatalogDTO;
 import com.bookmenow.catalog.service.CatalogService;
+import com.bookmenow.dto.CatalogDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

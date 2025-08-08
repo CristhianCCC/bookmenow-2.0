@@ -1,6 +1,5 @@
 package com.bookmenow.user.repository;
 import com.bookmenow.user.model.User;
-import com.bookmenow.user.model.enums.UserRoles;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

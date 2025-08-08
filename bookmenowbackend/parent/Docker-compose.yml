@@ -1,6 +1,23 @@
 version: '3.8'
 
 services:
+  # MySQL Service -------------------------------------------------------------------------------------------------------
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-bookmenow
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: userdb   # Se creará por defecto, las demás las crean los microservicios
+      MYSQL_USER: bookuser
+      MYSQL_PASSWORD: bookpass
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - bookmenow-network
+
   # eureka service ------------------------------------------------------------------------------------------------------
   eureka:
     container_name: eureka
@@ -44,9 +61,17 @@ services:
         JAR_FILE: target/user-0.0.1-SNAPSHOT.jar
     environment:
       - JAVA_OPTS=-Xms256M -Xmx256M
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/userdb
+      - SPRING_DATASOURCE_USERNAME=bookuser
+      - SPRING_DATASOURCE_PASSWORD=bookpass
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQLDialect
       - SPRING_APPLICATION_JSON={"eureka":{"client":{"serviceUrl":{"defaultZone":"http://eureka:8761/eureka/"}}}}
     depends_on:
       - eureka
+      - mysql
     networks:
       - bookmenow-network
 
@@ -60,9 +85,17 @@ services:
         JAR_FILE: target/catalog-0.0.1-SNAPSHOT.jar
     environment:
       - JAVA_OPTS=-Xms256M -Xmx256M
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/catalogdb
+      - SPRING_DATASOURCE_USERNAME=bookuser
+      - SPRING_DATASOURCE_PASSWORD=bookpass
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQLDialect
       - SPRING_APPLICATION_JSON={"eureka":{"client":{"serviceUrl":{"defaultZone":"http://eureka:8761/eureka/"}}}}
     depends_on:
       - eureka
+      - mysql
     networks:
       - bookmenow-network
 
@@ -76,16 +109,53 @@ services:
         JAR_FILE: target/booking-0.0.1-SNAPSHOT.jar
     environment:
       - JAVA_OPTS=-Xms256M -Xmx256M
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/bookingdb
+      - SPRING_DATASOURCE_USERNAME=bookuser
+      - SPRING_DATASOURCE_PASSWORD=bookpass
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQLDialect
       - SPRING_APPLICATION_JSON={"eureka":{"client":{"serviceUrl":{"defaultZone":"http://eureka:8761/eureka/"}}}}
     depends_on:
       - eureka
+      - mysql
     networks:
       - bookmenow-network
 
-# networks
+  # payment service -----------------------------------------------------------------------------------------------------
+  payment:
+    container_name: payment
+    build:
+      context: ./services/payment
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: target/payment-0.0.1-SNAPSHOT.jar
+    environment:
+      - JAVA_OPTS=-Xms256M -Xmx256M
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/paymentdb
+      - SPRING_DATASOURCE_USERNAME=bookuser
+      - SPRING_DATASOURCE_PASSWORD=bookpass
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQLDialect
+      - SPRING_APPLICATION_JSON={"eureka":{"client":{"serviceUrl":{"defaultZone":"http://eureka:8761/eureka/"}}}}
+    depends_on:
+      - eureka
+      - mysql
+    networks:
+      - bookmenow-network
+
+# networks --------------------------------------------------------------------------------------------------------------
 networks:
   bookmenow-network:
     driver: bridge
+
+# volumes ---------------------------------------------------------------------------------------------------------------
+volumes:
+  mysql_data:
+
 
 # to run the compose:
 # docker compose -f "C:\Users\Janus\Desktop\bookmenow\bookmenowbackend\parent\Docker-compose.yml" up -d --build --force-recreate

@@ -1,5 +1,4 @@
 package com.bookmenow.catalog.exceptions.exceptions;
-
 import com.bookmenow.catalog.exceptions.common.StandardizedApiExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +26,8 @@ public class ApiExceptionHandler {
      * Fallback handler for unhandled exceptions.
      */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<com.bookmenow.user.exceptions.common.StandardizedApiExceptionResponse> handleGenericException(Exception ex) {
-        com.bookmenow.user.exceptions.common.StandardizedApiExceptionResponse response = new com.bookmenow.user.exceptions.common.StandardizedApiExceptionResponse(
+    public ResponseEntity<com.bookmenow.catalog.exceptions.common.StandardizedApiExceptionResponse> handleGenericException(Exception ex) {
+        com.bookmenow.catalog.exceptions.common.StandardizedApiExceptionResponse response = new com.bookmenow.catalog.exceptions.common.StandardizedApiExceptionResponse(
                 "5000",
                 "Unexpected error: " + ex.getMessage(),
                 "/errors/server/unexpected",

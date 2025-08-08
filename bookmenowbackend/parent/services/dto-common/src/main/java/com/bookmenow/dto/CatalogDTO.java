@@ -1,5 +1,5 @@
-package com.bookmenow.catalog.dto;
-import com.bookmenow.catalog.dto.enums.UserRoles;
+package com.bookmenow.dto;
+import com.bookmenow.enums.UserRoles;
 
 import java.time.LocalDateTime;
 

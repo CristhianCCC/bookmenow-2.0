@@ -24,19 +24,13 @@
 			<version>4.3.0</version>
 		</dependency>
 
-		<!--to comunicate with user-->
+		<!--to comunicate with user and catalog -->
 		<dependency>
 			<groupId>com.bookmenow</groupId>
-			<artifactId>user</artifactId>
+			<artifactId>dto-common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
-		<!--to comunicate with catalog -->
-		<dependency>
-			<groupId>com.bookmenow</groupId>
-			<artifactId>catalog</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 
 		<!--spring security-->
 		<dependency>

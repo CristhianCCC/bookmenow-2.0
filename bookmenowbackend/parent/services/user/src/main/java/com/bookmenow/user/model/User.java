@@ -1,5 +1,5 @@
 package com.bookmenow.user.model;
-import com.bookmenow.user.model.enums.UserRoles;
+import com.bookmenow.enums.UserRoles;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

@@ -1,5 +1,5 @@
 package com.bookmenow.user.exceptions.validators;
-import com.bookmenow.user.dto.UserDTO;
+import com.bookmenow.dto.UserDTO;
 import com.bookmenow.user.exceptions.exceptions.BusinessRuleException;
 import com.bookmenow.user.repository.UserRepository;
 import com.bookmenow.user.security.dto.AuthRequest;

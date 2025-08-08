@@ -1,7 +1,6 @@
 package com.bookmenow.booking.controller;
-import com.bookmenow.booking.dto.BookingDTO;
-import com.bookmenow.booking.model.enums.BookingStatus;
 import com.bookmenow.booking.service.BookingService;
+import com.bookmenow.dto.BookingDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

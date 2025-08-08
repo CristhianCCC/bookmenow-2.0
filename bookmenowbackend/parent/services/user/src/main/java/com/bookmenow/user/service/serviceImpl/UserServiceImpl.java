@@ -1,5 +1,5 @@
 package com.bookmenow.user.service.serviceImpl;
-import com.bookmenow.user.dto.UserDTO;
+import com.bookmenow.dto.UserDTO;
 import com.bookmenow.user.exceptions.exceptions.BusinessRuleException;
 import com.bookmenow.user.exceptions.validators.UserValidators;
 import com.bookmenow.user.model.User;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;

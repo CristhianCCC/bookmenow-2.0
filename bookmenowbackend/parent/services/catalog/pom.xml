@@ -28,7 +28,7 @@
 		<!--to comunicate user with user-->
 		<dependency>
 			<groupId>com.bookmenow</groupId>
-			<artifactId>user</artifactId>
+			<artifactId>dto-common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 

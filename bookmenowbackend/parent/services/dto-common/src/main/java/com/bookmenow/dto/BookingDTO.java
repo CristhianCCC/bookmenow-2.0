@@ -1,9 +1,10 @@
-package com.bookmenow.booking.dto;
-import com.bookmenow.booking.model.enums.BookingStatus;
+package com.bookmenow.dto;
+import com.bookmenow.enums.BookingStatus;
+
 import java.time.LocalDateTime;
 
 public class BookingDTO {
-    
+
     private Long id;
 
     /**

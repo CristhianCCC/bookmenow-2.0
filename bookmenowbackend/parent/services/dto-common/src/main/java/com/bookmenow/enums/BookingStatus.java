@@ -1,4 +1,4 @@
-package com.bookmenow.booking.model.enums;
+package com.bookmenow.enums;
 
 public enum BookingStatus {
 

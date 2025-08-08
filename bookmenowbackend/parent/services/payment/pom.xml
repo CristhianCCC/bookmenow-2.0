@@ -21,6 +21,21 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+
+		<!--feign which is going to allow the comunication with catalog and user -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+			<version>4.3.0</version>
+		</dependency>
+
+		<!--To comunicate with catalog, user and booking -->
+		<dependency>
+			<groupId>com.bookmenow</groupId>
+			<artifactId>dto-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
 	</dependencies>
 
 	<!--To repackage, is important to create images -->

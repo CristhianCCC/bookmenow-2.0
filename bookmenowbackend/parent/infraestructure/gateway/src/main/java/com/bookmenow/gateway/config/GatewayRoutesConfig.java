@@ -14,26 +14,32 @@ public class GatewayRoutesConfig {
         return builder.routes()
                 // auth route for login/signup ---------------------------------------------------------------------------------
                 .route("auth-route", r -> r
-                .path("/auth/**")
-                .uri("lb://user") //name of the micro service
+                .path("/auth/**")//controller name
+                .uri("lb://user") //microservice name
                 )
 
                 //authorization path for user (validation)--------------------------------------------------------------
                 .route(p -> p
                         .path("/users/**")
                         .filters(f -> f.addRequestHeader("user-service", "Request"))
-                        .uri("lb://user")) //name of the micro service
+                        .uri("lb://user")) //microservice name
 
                 //Catalog service --------------------------------------------------------------------------------------
                 .route("catalog", r -> r
-                        .path("/catalogs/**")
-                        .uri("lb://catalog")
+                        .path("/catalogs/**")//controller name
+                        .uri("lb://catalog")//microservice name
                 )
 
                 //Booking service --------------------------------------------------------------------------------------
                 .route("booking", r -> r
-                        .path("/bookings/**")
-                        .uri("lb://booking")
+                        .path("/bookings/**") //controller name
+                        .uri("lb://booking")//microservice name
+                )
+
+                //Payment service --------------------------------------------------------------------------------------
+                .route("payment", r -> r
+                        .path("/payments/**")//controller name
+                        .uri("lb://payment")//microservice name
                 )
 
                 .build();

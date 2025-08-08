@@ -1,6 +1,5 @@
 package com.bookmenow.catalog.service;
-
-import com.bookmenow.catalog.dto.CatalogDTO;
+import com.bookmenow.dto.CatalogDTO;
 
 import java.util.List;
 import java.util.Optional;

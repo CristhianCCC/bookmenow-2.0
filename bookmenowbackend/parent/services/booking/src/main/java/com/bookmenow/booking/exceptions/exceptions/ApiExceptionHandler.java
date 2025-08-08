@@ -11,7 +11,7 @@ public class ApiExceptionHandler {
     /**
      * Handler for business rule violations.
      */
-    @ExceptionHandler(com.bookmenow.catalog.exceptions.exceptions.BusinessRuleException.class)
+    @ExceptionHandler(com.bookmenow.booking.exceptions.exceptions.BusinessRuleException.class)
     public ResponseEntity<StandardizedApiExceptionResponse> handleBusinessRuleException(BusinessRuleException ex){
         StandardizedApiExceptionResponse response = new StandardizedApiExceptionResponse(
                 ex.getCode(),
@@ -26,8 +26,8 @@ public class ApiExceptionHandler {
      * Fallback handler for unhandled exceptions.
      */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<com.bookmenow.user.exceptions.common.StandardizedApiExceptionResponse> handleGenericException(Exception ex) {
-        com.bookmenow.user.exceptions.common.StandardizedApiExceptionResponse response = new com.bookmenow.user.exceptions.common.StandardizedApiExceptionResponse(
+    public ResponseEntity<com.bookmenow.booking.exceptions.common.StandardizedApiExceptionResponse> handleGenericException(Exception ex) {
+        com.bookmenow.booking.exceptions.common.StandardizedApiExceptionResponse response = new com.bookmenow.booking.exceptions.common.StandardizedApiExceptionResponse(
                 "5000",
                 "Unexpected error: " + ex.getMessage(),
                 "/errors/server/unexpected",

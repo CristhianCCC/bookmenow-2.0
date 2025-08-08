@@ -1,6 +1,5 @@
 package com.bookmenow.booking.feign.clients;
-
-import com.bookmenow.user.dto.UserDTO;
+import com.bookmenow.dto.UserDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

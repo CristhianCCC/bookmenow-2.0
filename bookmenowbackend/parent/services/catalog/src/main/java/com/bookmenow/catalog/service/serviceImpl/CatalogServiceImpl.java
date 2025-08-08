@@ -1,13 +1,13 @@
 package com.bookmenow.catalog.service.serviceImpl;
-import com.bookmenow.catalog.dto.CatalogDTO;
 import com.bookmenow.catalog.exceptions.exceptions.BusinessRuleException;
 import com.bookmenow.catalog.exceptions.validators.CatalogValidators;
 import com.bookmenow.catalog.feign.userclient.UserClient;
 import com.bookmenow.catalog.model.Catalog;
 import com.bookmenow.catalog.repository.CatalogRepository;
 import com.bookmenow.catalog.service.CatalogService;
-import com.bookmenow.user.dto.UserDTO;
-import com.bookmenow.user.model.enums.UserRoles;
+import com.bookmenow.dto.CatalogDTO;
+import com.bookmenow.dto.UserDTO;
+import com.bookmenow.enums.UserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -49,6 +49,7 @@ public class CatalogServiceImpl implements CatalogService {
         }
 
         // Setting only the provider email (no relation with User entity)
+        catalog.setProviderId(userDTO.getId());
         catalog.setProviderEmail(userDTO.getEmail());
 
         return catalog;
@@ -57,6 +58,7 @@ public class CatalogServiceImpl implements CatalogService {
     // converting entity to dto ----------------------------------------------------------------------------------------
     private CatalogDTO toDTO (Catalog catalog){
         CatalogDTO dto = new CatalogDTO();
+        dto.setId(catalog.getId());
         dto.setName(catalog.getName());
         dto.setDescription(catalog.getDescription());
         dto.setPrice(catalog.getPrice());
@@ -73,10 +75,11 @@ public class CatalogServiceImpl implements CatalogService {
                 //using encoded email as user email
                 UserDTO userDTO = userClient.getUserByEmail(encodedEmail);
                 if (userDTO.getUserRoles() == UserRoles.PROVIDER) {
+                    dto.setProviderId(userDTO.getId());
                     dto.setProviderName(userDTO.getName());
                     dto.setProviderEmail(userDTO.getEmail());
                     dto.setProviderAdress(userDTO.getAddress());
-                    dto.setRole(com.bookmenow.catalog.dto.enums.UserRoles.valueOf(userDTO.getUserRoles().name()));
+                    dto.setRole(com.bookmenow.enums.UserRoles.valueOf(userDTO.getUserRoles().name()));
                 }
             } catch (Exception e) {
                 // Handle case where user does not exist or service is unavailable
@@ -122,8 +125,6 @@ public class CatalogServiceImpl implements CatalogService {
         //validations --------------------------------------------------------------------------------------------------
         CatalogValidators.validate(catalogDTO, true, catalogRepository);
         Catalog catalog = toEntity(catalogDTO);
-        catalog.setCreatedAt(LocalDateTime.now());
-        catalog.setUpdatedAt(LocalDateTime.now());
         Catalog catalogSaved = catalogRepository.save(catalog);
         return toDTO(catalogSaved);
     }

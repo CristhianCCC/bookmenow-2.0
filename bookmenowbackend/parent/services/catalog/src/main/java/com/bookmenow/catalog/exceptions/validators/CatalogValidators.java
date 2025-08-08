@@ -1,8 +1,7 @@
 package com.bookmenow.catalog.exceptions.validators;
-
-import com.bookmenow.catalog.dto.CatalogDTO;
 import com.bookmenow.catalog.exceptions.exceptions.BusinessRuleException;
 import com.bookmenow.catalog.repository.CatalogRepository;
+import com.bookmenow.dto.CatalogDTO;
 import org.springframework.http.HttpStatus;
 
 import java.time.Instant;

@@ -1,5 +1,5 @@
 package com.bookmenow.booking.model;
-import com.bookmenow.booking.model.enums.BookingStatus;
+import com.bookmenow.enums.BookingStatus;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

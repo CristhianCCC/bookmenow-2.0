@@ -1,6 +1,5 @@
-package com.bookmenow.user.dto;
-
-import com.bookmenow.user.model.enums.UserRoles;
+package com.bookmenow.dto;
+import com.bookmenow.enums.UserRoles;
 
 import java.time.LocalDateTime;
 
@@ -121,3 +120,4 @@ public class UserDTO {
         this.userRoles = userRoles;
     }
 }
+

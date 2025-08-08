@@ -1,6 +1,7 @@
 package com.bookmenow.user.service;
 
-import com.bookmenow.user.dto.UserDTO;
+
+import com.bookmenow.dto.UserDTO;
 
 import java.util.List;
 

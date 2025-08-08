@@ -49,6 +49,7 @@
     </dependencies>
 
     <modules>
+        <module>dto-common</module>
         <module>user</module>
         <module>catalog</module>
         <module>booking</module>

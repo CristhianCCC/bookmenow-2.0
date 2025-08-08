@@ -1,5 +1,5 @@
 package com.bookmenow.user.controller;
-import com.bookmenow.user.dto.UserDTO;
+import com.bookmenow.dto.UserDTO;
 import com.bookmenow.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

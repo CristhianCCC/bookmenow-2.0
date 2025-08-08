@@ -1,6 +1,6 @@
 package com.bookmenow.booking.service;
-import com.bookmenow.booking.dto.BookingDTO;
-import com.bookmenow.booking.model.enums.BookingStatus;
+
+import com.bookmenow.dto.BookingDTO;
 
 import java.util.List;
 

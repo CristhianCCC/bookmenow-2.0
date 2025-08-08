@@ -1,13 +1,13 @@
 package com.bookmenow.booking.exceptions.validators;
-import com.bookmenow.booking.dto.BookingDTO;
+import com.bookmenow.booking.exceptions.exceptions.BusinessRuleException;
 import com.bookmenow.booking.repository.BookingRepository;
-import com.bookmenow.catalog.exceptions.exceptions.BusinessRuleException;
+import com.bookmenow.dto.BookingDTO;
 import org.springframework.http.HttpStatus;
 import java.time.LocalDateTime;
 
 public class BookingValidators {
 
-    private static void validate (BookingDTO dto, boolean isNew, BookingRepository bookingRepository) throws BusinessRuleException{
+    private static void validate (BookingDTO dto, boolean isNew, BookingRepository bookingRepository) throws BusinessRuleException {
 
         if (dto == null){
             throw new BusinessRuleException("4001", "Booking cannot be empty", HttpStatus.BAD_REQUEST);
