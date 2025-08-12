@@ -1,0 +1,17 @@
+
+@import "tailwindcss";
+
+.pacifico-regular {
+  font-family: "Pacifico", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  font-family: pacifico;
+  background-color: #F9FAFB;
+}
+
+.header {
+  filter: brightness(30%);
+}
