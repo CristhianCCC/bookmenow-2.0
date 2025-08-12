@@ -10,7 +10,7 @@ import serviceImg6 from "../../img/services6.jpg"
 export default function Services () {
     return (
         <>
-            <div className="text-center py-25 bg-gradient-to-r from-black via-gray-800 to-black rounded-2xl">
+            <div className="my-10 text-center py-25 bg-gradient-to-r from-black via-gray-800 to-black rounded-2xl">
                 <h1 className="text-emerald-500 font-bold text-2xl">Most Picked <span className="bg-black rounded-2xl p-1 text-white font-bold">Services</span></h1>
                 <p className="lg:px-40 text-white font-bold">We provide creative, modern solutions tailored to your needs, offering a wide range of services to help you find the perfect fit for your business.</p>
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 p-15 justify-center">
