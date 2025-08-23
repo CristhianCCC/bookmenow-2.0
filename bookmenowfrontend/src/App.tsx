@@ -1,21 +1,18 @@
-import About from "./components/landing/About"
-import Body from "./components/landing/Body"
-import Guide from "./components/landing/Guide"
-import Hero from "./components/landing/Hero"
 import Navbar from "./components/landing/Navbar"
-import Services from "./components/landing/Services"
+import RoutingPaths from "./components/routes/RoutingPaths"
 import "./index.css"
+
+
 
 export default function App() {
 
+  
+
   return (
-    <>
-        <Navbar/>
-        <Hero/>
-        <Body/>
-        <About/>
-        <Services/>
-        <Guide/>
+    <>  
+      <Navbar/>
+      {/*calling RoutingPaths that will handle all routes available*/}
+      <RoutingPaths/> 
     </>
   )
 }

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Navbar () {
 
@@ -19,11 +20,11 @@ export default function Navbar () {
                         </svg>
                 </button>
                 <ul className={`rounded-2xl flex lg:justify-evenly justify-between items-center bg-gray-900 shadow-2xl text-gray-200 overflow-hidden duration-1000 ease-out ${menuOpen ? 'flex-col-reverse max-h-96 opacity-100' : 'max-h-0 opacity-0'} md:max-h-none md:opacity-100`}>
-                    <a href="/home" className="hover:bg-emerald-400 rounded-2xl px-5 hover:text-xl duration-300 ease-in ">Home</a>
-                    <a href="/services" className="hover:bg-emerald-400 rounded-2xl px-5 hover:text-xl duration-300 ease-in">Services</a>
-                    <a href="/home"><img src={img} className="w-20" alt="Logo" /></a>
-                    <a href="/projects" className="hover:bg-emerald-400 rounded-2xl px-5 hover:text-xl duration-300 ease-in">Providers</a>
-                    <a href="/signin" className="hover:bg-emerald-400 rounded-2xl px-5 hover:text-xl duration-300 ease-in">Signin</a>
+                    <Link to="/" className="hover:bg-emerald-400 rounded-2xl px-5 hover:text-xl duration-300 ease-in ">Home</Link>
+                    <Link to="/services" className="hover:bg-emerald-400 rounded-2xl px-5 hover:text-xl duration-300 ease-in">Services</Link>
+                    <Link to="/"><img src={img} className="w-20" alt="Logo" /></Link>
+                    <Link to="/projects" className="hover:bg-emerald-400 rounded-2xl px-5 hover:text-xl duration-300 ease-in">Providers</Link>
+                    <Link to="/auth" className="hover:bg-emerald-400 rounded-2xl px-5 hover:text-xl duration-300 ease-in">Sign-in</Link>
                 </ul>
             </nav>
                 

@@ -1,3 +1,4 @@
+import { motion } from "motion/react";
 import { useState } from "react"
 import { FaPlus } from "react-icons/fa";
 import { FaBusinessTime } from "react-icons/fa";
@@ -20,6 +21,7 @@ export default function Body () {
 
     return (
         <>
+        
             <h1 className="text-center text-5xl font-bold py-10">Why chose Bookmenow?</h1>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:px-[100px]">
                     <div className="text-center flex-col justify-items-center hover:text-3xl duration-300 ease-in-out shadow-2xl rounded-2xl p-10">
