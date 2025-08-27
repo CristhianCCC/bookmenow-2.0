@@ -10,6 +10,7 @@
 body {
   font-family: pacifico;
   background-color: #F9FAFB;
+  scroll-behavior: smooth;
 }
 
 .header {

@@ -1,10 +1,11 @@
 import Navbar from "./components/landing/Navbar"
-import RoutingPaths from "./components/routes/RoutingPaths"
+import RoutingPaths from "./routes/RoutingPaths"
 import "./index.css"
 
 
 
 export default function App() {
+
 
   
 
