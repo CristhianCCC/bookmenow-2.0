@@ -3,6 +3,7 @@ import formImg from "./../../img/form.png"
 import AuthService from "../../services/AuthService";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { easeInOut, motion } from "motion/react";
 
 
 type FormData = {
@@ -47,7 +48,9 @@ export default function Auth () {
                 });
                 return ;
             }
-            setError("email", {type: "manual", message: "connection error, please try it again"});
+            setError("email", 
+            {type: "manual", 
+            message: "connection error, please try it again"});
         }
     }
 
@@ -58,49 +61,80 @@ export default function Auth () {
 
 
         {/*for the whole form*/}
-            <div className="grid grid-cols-1 lg:grid-cols-2 pt-20 xl:p-40 bg-gradient-to-b from-blue-500 to-emerald-500 rounded-2xl">
+            <div className="bg-cover relative">
+                <img src={formImg} alt="form-img" className="object-cover w-screen h-screen brightness-75 blur-xs"/>
+                    <div className="flex justify-center">
+                    <form onSubmit={handleSubmit(onSubmit)} className="absolute translate-y-15 top-[30px] flex justify-center flex-col p-15 gap-3 rounded-2xl backdrop-blur-sm bg-white/30">
 
-                {/*for the img*/}
-                <div>
-                    <img src={formImg} alt="form-img" className="w-full h-full lg:w-300 lg:h-max rounded-2xl hidden md:block blur-xs "/>
-                </div>
-                {/*for the content inside of the form box*/}
-                <form onSubmit={handleSubmit(onSubmit)} className="bg-gradient-to-b from-blue-500 to-emerald-500 md:bg-none md:bg-white rounded-2xl flex flex-col text-center items-center gap-3 ">
+                        <h1 className="text-2xl font-bold text-white text-center">Sign-in</h1>
 
-                    <h1 className="text-4xl font-bold pt-15 text-white md:text-emerald-500">Sign-in</h1>
+                        {/*email*/}
+                        <label className="font-bold text-white">Email</label>
+                        <motion.input 
+                        {...register("email", {
+                            required: true,
+                            pattern: /^\S+@\S+$/i
+                        })}
+                        className="text-center border border-black rounded-2xl text-white font-bold"
+                        transition={{ duration: 0.4, ease: easeInOut }}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.5 }}
+                        placeholder="email@example.com"
+                        />
+                        {errors?.email?.type === "required" && 
+                        <motion.p 
+                        initial = {{ opacity: 0, y: 20 }}
+                        animate = {{ opacity: 1, y: 0 }}
+                        className="bg-red-600 rounded-2xl px-20 text-white">Please enter your Email</motion.p>}
+                        {errors.email?.type === "pattern" && 
+                        <motion.p 
+                        initial = {{ opacity: 0, y: 20 }}
+                        animate = {{ opacity: 1, y: 0 }}
+                        className="bg-red-600 rounded-2xl px-20 text-white">Email is incorrect</motion.p>}
 
-                    {/*email*/}
-                    <label className="font-bold text-white md:text-black">Email</label>
-                    <input 
-                    {...register("email", {
-                        required: true,
-                        pattern: /^\S+@\S+$/i
-                    })}
-                    className="bg-white md:bg-none md:border md:border-gray-400 rounded-2xl w-100 text-center"
-                    placeholder="email@example.com"
-                    />
-                    {errors?.email?.type === "required" && <p className="bg-red-600 rounded-2xl px-20 text-white">Please enter your Email</p>}
-                    {errors.email?.type === "pattern" && <p className="bg-red-600 rounded-2xl px-20 text-white">Email is incorrect</p>}
-
-                    {/*password*/}
-                    <label className="font-bold text-white md:text-black">Password</label>
-                    <input
-                    { ...register("password", {
-                        required: true,
-                    }) }
-                    type="password"
-                    className="bg-white md:bg-none md:border md:border-gray-400 rounded-2xl w-100 text-center"
-                    placeholder="Password"
-                    />
-                    {errors?.password?.type === "required" && <p className="bg-red-600 rounded-2xl px-20 text-white">Please enter your password</p>}
-                    {errors.password && (<p className="bg-red-600 rounded-2xl px-20 text-white">{errors.password.message}</p>)}
+                        {/*password*/}
+                        <label className="font-bold text-white">Password</label>
+                        <motion.input
+                        { ...register("password", {
+                            required: true,
+                        }) }
+                        type="password"
+                        className="text-center border border-black rounded-2xl text-white font-bold"
+                        transition={{ duration: 0.4, ease: easeInOut }}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.5 }}
+                        placeholder="Password"
+                        />
+                        {errors?.password?.type === "required" && 
+                        <motion.p 
+                        initial = {{opacity: 0, y: 20}}
+                        animate = {{opacity: 1, y: 0}}
+                        className="bg-red-600 rounded-2xl px-20 text-white">Please enter your password</motion.p>}
+                        {errors.password && 
+                        (<motion.p 
+                        initial = {{ opacity:0, y:20 }}
+                        animate = {{ opacity:1, y:0 }}
+                        className="bg-red-600 rounded-2xl px-20 text-white">{errors.password.message}</motion.p>)}
+                        
+                        <motion.input 
+                        type="submit" 
+                        value="Log in" 
+                        className="text-white bg-blue-600  font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer"
+                        initial = {{ opacity: 0, y: 20 }}
+                        animate = {{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, ease: easeInOut }}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.5 }}
+                        />
                     
-                    <input type="submit" value="Log in" className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 cursor-pointer"/>
-                
-                    {/*if auth, success message will show on screen*/}
-                    {successMessage && <div className="bg-emerald-500 text-white rounded-2xl px-5 py-2 mt-2"> { successMessage } </div>}
-                    <Link to="/register" className=" text-purple-50 md:text-pink-500 flex md:underline font-extrabold">Are you new? click here and create an account</Link>
-                </form>
+                        {/*if auth, success message will show on screen*/}
+                        {successMessage && <div className="bg-emerald-500 text-white rounded-2xl px-5 py-2 mt-2"> { successMessage } </div>}
+                        
+                        <div className="flex justify-center">
+                            <Link to="/register" className=" text-blue-50  flex md:underline font-bold">Are you new? click here and create an account</Link>
+                        </div>
+                    </form>
+                </div>
             </div>
         </>
     )

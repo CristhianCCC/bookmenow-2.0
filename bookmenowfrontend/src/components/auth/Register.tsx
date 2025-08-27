@@ -1,13 +1,18 @@
-import { useForm } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import form  from "./../../img/form.png";
 import type { user } from "./../../types/user"
-import { addPointerInfo, easeInOut, motion, scale } from "motion/react";
+import { easeInOut, motion } from "motion/react";
+import RegisterService from "../../services/RegisterService";
+import { useState } from "react";
 
 
 
 
 export default function Register() {
 
+    const [successMessage, setSuccessMessage] = useState<string | null>();
+
+    //setting the form
     const{
         register,
         handleSubmit,
@@ -15,13 +20,40 @@ export default function Register() {
         setError
     } = useForm<user>();
 
+    //connecting onsubmit with axios and making the bridge with backend
+    const onSubmit: SubmitHandler<user> = async (data) => {
+        try{
+            const response = await RegisterService.postUser(data)
+            console.log("user successfully created");
+
+            const userCreated = response.userCreated;
+
+            localStorage.setItem("usercreated", userCreated);
+
+            setSuccessMessage("User successfully created, redirecting...");
+
+            setTimeout(() => {window.location.href = "/auth"}, 2000);
+
+        } catch (error: any){
+
+            if(error.response?.status === 409 || error.response.status === "2003"){
+                setError ("email", {
+                    type: "manual",
+                    message: "Email already in use, try with another one"
+                });
+                return;
+            }
+
+        }
+    }
+
     return (
         <>
         <div className="bg-cover relative">
             <img src={form} alt="register-img" className="h-screen w-screen object-cover brightness-70 blur-xs"/>
             <div className="flex justify-center">
 
-            <form onSubmit={handleSubmit(onsubmit)} 
+            <form onSubmit={handleSubmit(onSubmit)} 
             className="absolute translate-y-15 top-[30px] flex justify-center flex-col p-15 gap-5 rounded-2xl backdrop-blur-sm bg-white/30"
             >
 
@@ -103,6 +135,11 @@ export default function Register() {
                     initial = {{opacity: 0, y: 20 }}
                     animate= {{opacity: 1, y:0 }}
                     className="bg-red-600 rounded-2xl px-20 text-white font-bold">Email not valid</motion.p >}
+                    <motion.p 
+                    initial = {{ opacity: 0, y: 20 }}
+                    animate = {{ opacity: 1, y: 0 }}
+                    className="bg-red-600 rounded-2xl px-20 text-white font-bold"
+                    >{errors.email?.message}</motion.p>
                 </div>
 
                 <div className="flex flex-col justify-self-start">
@@ -139,16 +176,18 @@ export default function Register() {
                         border border-gray-300 rounded-2xl 
                         text-white font-semibold text-center 
                         shadow-md cursor-pointer 
-                        bg-gray-800
-                        "
+                        bg-gray-800"
+                        {...register("userRoles", {
+                            required: true
+                        })}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, ease: "easeOut" }}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}>
 
-                        <option value="provider" className="text-black">PROVIDER</option>
-                        <option value="client" className="text-black">CLIENT</option>
+                        <option value="PROVIDER" className="text-black">PROVIDER</option>
+                        <option value="CLIENT" className="text-black">CLIENT</option>
                     </motion.select>
                 </div>
 
@@ -215,6 +254,15 @@ export default function Register() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.5 }}
                 />
+
+                {/*if account successfully created*/}
+                {successMessage && 
+                <motion.div 
+                initial = {{ opacity: 0, y: 20 }}
+                animate = {{ opacity: 1, y: 0 }}
+                className="bg-emerald-500 text-white rounded-2xl">
+                { successMessage }</motion.div>}
+
             </form>
             </div>
         </div>

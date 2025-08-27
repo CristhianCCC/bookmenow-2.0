@@ -9,6 +9,4 @@ export type user = {
     userRoles: UserRoles;
     phone: string;
     address: string;
-    createdAt: Date;
-    updatedAt:Date;
 }

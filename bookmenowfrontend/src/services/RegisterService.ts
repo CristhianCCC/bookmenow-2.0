@@ -1,13 +1,14 @@
 import axios from "axios";
+import type { user } from "../types/user";
 
 
 const REGISTER_URL= "http://localhost:8090/users";
 
 export default class RegisterService {
 
-    static async postUser(RegisterService: RegisterService){
+    static async postUser(userData: user){
         try{
-            const response = await axios.post(REGISTER_URL, RegisterService)
+            const response = await axios.post(REGISTER_URL, userData)
             return response.data;
 
         } catch(error: any){
